@@ -4,7 +4,7 @@ import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/utils.dart';
 import 'package:http/http.dart' as http;
-import 'package:pas_moobile_11pplg_29/app_color.dart';
+import 'package:pas_moobile_11pplg_29/themes/app_color.dart';
 import 'package:pas_moobile_11pplg_29/models/login_model.dart';
 import 'package:pas_moobile_11pplg_29/models/register_model.dart';
 import 'package:pas_moobile_11pplg_29/network/client_network.dart';
@@ -39,7 +39,7 @@ class AuthController extends GetxController {
     try {
       isloading.value = true;
       final res = await http.post(
-        Uri.parse("${ClientNetwork.baseURLV1}/latihan/register-user"),
+        Uri.parse("${ClientNetwork.baseURL}/latihan/register-user"),
         body: {
           "username": username.text,
           "password": password.text,
@@ -75,6 +75,11 @@ class AuthController extends GetxController {
       Get.snackbar("Exception", e.toString(), backgroundColor: AppColors.error);
     }
     isloading.value = false;
+
+    username.clear();
+    password.clear();
+    fullname.clear();
+    email.clear();
   }
 
   void login() async {

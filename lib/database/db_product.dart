@@ -1,14 +1,14 @@
-import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
 
 class DbProduct {
   static final DbProduct _instance = DbProduct._internal();
   factory DbProduct() => _instance;
   DbProduct._internal();
 
-  static Database? _db;
+  Database? _db;
 
-  Future<Database> get db async {
+  Future<Database> get database async {
     if (_db != null) return _db!;
     _db = await _initDb();
     return _db!;
@@ -16,40 +16,47 @@ class DbProduct {
 
   Future<Database> _initDb() async {
     final dbPath = await getDatabasesPath();
-    final path = join(dbPath, 'football.db');
+    final path = join(dbPath, 'product.db');
 
     return await openDatabase(
       path,
       version: 1,
       onCreate: (db, version) async {
         await db.execute(
-          'CREATE TABLE favorite_prdouct(id INTEGER PRIMARY KEY AUTOINCREMENT, isFav INTEGER)',
+          'CREATE TABLE favorite_product('
+          'product_id INTEGER PRIMARY KEY,'
+          'isFav INTEGER NOT NULL'
+          ')',
         );
       },
     );
   }
 
-  Future<List<Map<String, dynamic>>> getFavoriteProduct() async {
-    final client = await db;
-    return client.query('favorite_prdouct', orderBy: 'id DESC');
-  }
-
-  Future<int> deleteFavorite(int id) async {
-    final client = await db;
-    return await client.delete(
-      'favorite_prdouct',
-      where: 'id = ?',
-      whereArgs: [id],
-    );
-  }
-
-  Future<List<Map<String, dynamic>>> getFavorite() async {
-    final client = await db;
-    return client.query(
-      'favorite_prdouct',
+  Future<List<int>> getFavoriteIds() async {
+    final db = await database;
+    final rows = await db.query(
+      'favorite_product',
       where: 'isFav = ?',
       whereArgs: [1],
-      orderBy: 'id DESC',
     );
+
+    return rows.map<int>((row) => row['product_id'] as int).toList();
+  }
+
+  Future<void> setFavorite(int productId, bool isFav) async {
+    final db = await database;
+
+    if (isFav) {
+      await db.insert('favorite_product', {
+        'product_id': productId,
+        'isFav': 1,
+      }, conflictAlgorithm: ConflictAlgorithm.replace);
+    } else {
+      await db.delete(
+        'favorite_product',
+        where: 'product_id = ?',
+        whereArgs: [productId],
+      );
+    }
   }
 }

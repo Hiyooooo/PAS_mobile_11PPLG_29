@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pas_moobile_11pplg_29/app_color.dart';
+import 'package:pas_moobile_11pplg_29/themes/app_color.dart';
 import 'package:pas_moobile_11pplg_29/routes/pages.dart';
 import 'package:pas_moobile_11pplg_29/routes/routes.dart';
 

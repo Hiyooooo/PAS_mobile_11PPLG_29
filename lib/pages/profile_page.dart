@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pas_moobile_11pplg_29/app_color.dart';
+import 'package:pas_moobile_11pplg_29/themes/app_color.dart';
 import 'package:pas_moobile_11pplg_29/controllers/auth_controller.dart';
 import 'package:pas_moobile_11pplg_29/widgets/button_widget.dart';
 import 'package:pas_moobile_11pplg_29/widgets/profile_header.dart';
@@ -15,19 +15,19 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: AppColors.primary,
-        foregroundColor: AppColors.surface,
-        elevation: 1,
-        centerTitle: true,
+        automaticallyImplyLeading: false,
+        backgroundColor: AppColors.primaryDark,
         title: const Text(
           'Profile',
-          style: TextStyle(fontWeight: FontWeight.w600),
+          style: TextStyle(
+            color: AppColors.surface,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
       body: SafeArea(
         child: Column(
           children: [
-            // Bagian atas: isi penuh dan center
             Expanded(
               child: Container(
                 width: double.infinity,
