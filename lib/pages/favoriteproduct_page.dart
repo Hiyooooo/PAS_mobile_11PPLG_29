@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pas_moobile_11pplg_29/controllers/product_controller.dart';
+import 'package:pas_moobile_11pplg_29/routes/routes.dart';
 import 'package:pas_moobile_11pplg_29/themes/app_color.dart';
 import 'package:pas_moobile_11pplg_29/widgets/productitem_widget.dart';
 
@@ -12,12 +13,12 @@ class FavoriteproductPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: AppColors.primaryDark,
         automaticallyImplyLeading: false,
         title: const Text(
-          'Favorite Products',
+          'Favorite Product',
           style: TextStyle(
             color: AppColors.surface,
             fontWeight: FontWeight.w600,
@@ -33,8 +34,14 @@ class FavoriteproductPage extends StatelessWidget {
             return const Center(child: Text('No favorite products yet.'));
           }
 
-          return ListView.builder(
+          return GridView.builder(
             itemCount: favorites.length,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 12,
+              mainAxisSpacing: 12,
+              childAspectRatio: 0.68,
+            ),
             itemBuilder: (context, index) {
               final product = favorites[index];
 
@@ -43,6 +50,9 @@ class FavoriteproductPage extends StatelessWidget {
                 isFavorite: true,
                 onFavoriteTap: () {
                   controller.removeFavorite(product.id);
+                },
+                onTap: () {
+                  Get.toNamed(AppRouter.detailproductpage, arguments: product);
                 },
               );
             },

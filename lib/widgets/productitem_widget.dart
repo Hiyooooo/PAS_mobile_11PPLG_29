@@ -6,17 +6,15 @@ class ProductTile extends StatelessWidget {
   final ProductModel product;
   final bool isFavorite;
   final VoidCallback? onFavoriteTap;
+  final VoidCallback? onTap;
 
   const ProductTile({
     super.key,
     required this.product,
     required this.isFavorite,
     this.onFavoriteTap,
+    this.onTap,
   });
-
-  String get categoryText {
-    return product.category.toString().split('.').last;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,23 +22,21 @@ class ProductTile extends StatelessWidget {
       color: AppColors.surface,
       elevation: 2,
       shadowColor: AppColors.shadow,
-      margin: const EdgeInsets.only(bottom: 12),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: const BorderSide(color: AppColors.border, width: 0.6),
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
+        onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Row(
+          padding: const EdgeInsets.all(8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Gambar produk
-              ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: SizedBox(
-                  width: 72,
-                  height: 72,
+              Expanded(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
                   child: Image.network(
                     product.image,
                     fit: BoxFit.cover,
@@ -56,56 +52,65 @@ class ProductTile extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(width: 12),
+              const SizedBox(height: 8),
 
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
+              // Judul + icon bookmark
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Text(
                       product.title,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         color: AppColors.textPrimary,
-                        fontSize: 15,
+                        fontSize: 13,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      categoryText,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        color: AppColors.textSecondary,
-                        fontSize: 12,
-                      ),
+                  ),
+                  IconButton(
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
+                    onPressed: onFavoriteTap,
+                    icon: Icon(
+                      isFavorite ? Icons.bookmark : Icons.bookmark_border,
+                      size: 18,
+                      color: isFavorite
+                          ? Colors.amber
+                          : AppColors.textSecondary,
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      '\$${product.price}',
-                      style: const TextStyle(
-                        color: AppColors.primaryDark,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
+                    tooltip: isFavorite
+                        ? 'Remove from favorite'
+                        : 'Add to favorite',
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 4),
+
+              // Category
+              Text(
+                '${product.category}',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  color: AppColors.textSecondary,
+                  fontSize: 11,
                 ),
               ),
 
-              // Icon bookmark
-              IconButton(
-                onPressed: onFavoriteTap,
-                icon: Icon(
-                  isFavorite ? Icons.bookmark : Icons.bookmark_border,
-                  size: 22,
-                  color: isFavorite ? Colors.amber : AppColors.textSecondary,
+              const SizedBox(height: 4),
+
+              // Harga
+              Text(
+                '\$${product.price}',
+                style: const TextStyle(
+                  color: AppColors.success,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
                 ),
-                tooltip: isFavorite
-                    ? 'Remove from favorite'
-                    : 'Add to favorite',
               ),
             ],
           ),

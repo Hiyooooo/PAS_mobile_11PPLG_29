@@ -37,7 +37,7 @@ class LoginPage extends StatelessWidget {
                   const SizedBox(height: 12),
 
                   Text(
-                    'Practice MobileDev',
+                    'Assesment MobileDev',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       color: AppColors.primaryDark,
                       fontWeight: FontWeight.w700,
@@ -48,7 +48,7 @@ class LoginPage extends StatelessWidget {
                   const SizedBox(height: 4),
 
                   Text(
-                    'Latihan mobile development',
+                    'Assesment mobile development',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: AppColors.textSecondary,
                     ),
@@ -97,11 +97,11 @@ class LoginPage extends StatelessWidget {
                   ),
 
                   const SizedBox(height: 20),
-                  AppButton(
-                    text: "Register",
+                  TextButton(
                     onPressed: () {
                       Get.toNamed(AppRouter.registerpage);
                     },
+                    child: Text("Don't have any account? click here"),
                   ),
                 ],
               ),

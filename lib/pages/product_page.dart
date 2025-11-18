@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pas_moobile_11pplg_29/controllers/product_controller.dart';
+import 'package:pas_moobile_11pplg_29/routes/routes.dart';
 import 'package:pas_moobile_11pplg_29/themes/app_color.dart';
 import 'package:pas_moobile_11pplg_29/widgets/productitem_widget.dart';
 
@@ -14,6 +15,7 @@ class ProductPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: AppColors.primaryDark,
         automaticallyImplyLeading: false,
         title: const Text(
@@ -41,8 +43,14 @@ class ProductPage extends StatelessWidget {
             onRefresh: () async {
               controller.fetchProducts();
             },
-            child: ListView.builder(
-              physics: const AlwaysScrollableScrollPhysics(),
+            child: GridView.builder(
+              padding: const EdgeInsets.all(16),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 12,
+                mainAxisSpacing: 12,
+                childAspectRatio: 0.68,
+              ),
               itemCount: products.length,
               itemBuilder: (context, index) {
                 final product = products[index];
@@ -51,8 +59,12 @@ class ProductPage extends StatelessWidget {
                 return ProductTile(
                   product: product,
                   isFavorite: isFav,
-                  onFavoriteTap: () {
-                    controller.toggleFavorite(product.id);
+                  onFavoriteTap: () => controller.toggleFavorite(product.id),
+                  onTap: () {
+                    Get.toNamed(
+                      AppRouter.detailproductpage,
+                      arguments: product,
+                    );
                   },
                 );
               },

@@ -1,6 +1,7 @@
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:pas_moobile_11pplg_29/bindings/app_binding.dart';
 import 'package:pas_moobile_11pplg_29/bindings/splashscreen_binding.dart';
+import 'package:pas_moobile_11pplg_29/pages/detailproduct_page.dart';
 import 'package:pas_moobile_11pplg_29/pages/favoriteproduct_page.dart';
 import 'package:pas_moobile_11pplg_29/pages/login_page.dart';
 import 'package:pas_moobile_11pplg_29/pages/mainnav_page.dart';
@@ -40,6 +41,11 @@ class AppPages {
     GetPage(
       name: AppRouter.favoritepage,
       page: () => FavoriteproductPage(),
+      binding: AppBinding(),
+    ),
+    GetPage(
+      name: AppRouter.detailproductpage,
+      page: () => DetailProductPage(),
       binding: AppBinding(),
     ),
     GetPage(

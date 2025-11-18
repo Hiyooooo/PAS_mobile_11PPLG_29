@@ -6,5 +6,6 @@ class AppRouter {
   static const homepage = "/homepage";
   static const productpage = "/productpage";
   static const favoritepage = "/favoritepage";
+  static const detailproductpage = "/detailproduct";
   static const profilepage = "/profilepage";
 }
